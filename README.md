@@ -77,4 +77,27 @@ Contributions, issues, and feature requests are welcome! Feel free to check [iss
 ## License
 
 This project is [MIT](https://choosealicense.com/licenses/mit/) licensed.
-```
+
+
+## Changelog / Updates
+
+This updated script includes:
+
+1. More verbose logging throughout the script, especially in the `extract_info` function.
+2. A new `--urls-only` argument that, when set, will only export URLs to the CSV file.
+3. Additional logging in the `main` function to show the parameters being used for the scrape.
+
+To use the script with these new features:
+
+- For verbose logging:
+  ```
+  python search_scraper.py "site:example.com" "example.com" -v
+  ```
+
+- To export only URLs:
+  ```
+  python search_scraper.py "site:example.com" "example.com" --urls-only
+  ```
+
+These changes provide more detailed logging for debugging purposes and offer more flexibility in the output format.
+The verbose logging will help you understand exactly what the script is doing at each step, which can be particularly useful when troubleshooting or when you want to know why specific results are or aren't being included.
