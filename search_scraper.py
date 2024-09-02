@@ -1,4 +1,4 @@
-import requests
+Copyimport requests
 from bs4 import BeautifulSoup
 import time
 import random
@@ -8,12 +8,26 @@ import argparse
 import logging
 from urllib.parse import urlparse
 
-def setup_logger(log_level):
+def setup_logger(log_level, log_file=None):
     """Set up and configure logger."""
-    logging.basicConfig(level=log_level,
-                        format='%(asctime)s - %(levelname)s - %(message)s',
-                        datefmt='%Y-%m-%d %H:%M:%S')
-    return logging.getLogger(__name__)
+    logger = logging.getLogger(__name__)
+    logger.setLevel(log_level)
+    formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+
+    # Console handler
+    console_handler = logging.StreamHandler()
+    console_handler.setLevel(log_level)
+    console_handler.setFormatter(formatter)
+    logger.addHandler(console_handler)
+
+    # File handler (if log_file is provided)
+    if log_file:
+        file_handler = logging.FileHandler(log_file)
+        file_handler.setLevel(log_level)
+        file_handler.setFormatter(formatter)
+        logger.addHandler(file_handler)
+
+    return logger
 
 def search_google(query, start=0, num_results=10, user_agent=None):
     """Perform a Google search and return the BeautifulSoup object of the result page."""
@@ -108,11 +122,12 @@ def main():
     parser.add_argument('-v', '--verbose', action='store_true', help='Enable verbose logging')
     parser.add_argument('-u', '--user-agent', help='Custom User-Agent string')
     parser.add_argument('--urls-only', action='store_true', help='Export only URLs to CSV')
+    parser.add_argument('-l', '--log-file', help='Log file for verbose output')
 
     args = parser.parse_args()
 
     global logger
-    logger = setup_logger(logging.DEBUG if args.verbose else logging.INFO)
+    logger = setup_logger(logging.DEBUG if args.verbose else logging.INFO, args.log_file)
 
     logger.info("Starting scrape...")
     logger.info(f"Query: {args.query}")
@@ -121,6 +136,8 @@ def main():
     logger.info(f"Delay: {args.delay}")
     logger.info(f"Output file: {args.output}")
     logger.info(f"URLs only: {args.urls_only}")
+    if args.log_file:
+        logger.info(f"Log file: {args.log_file}")
 
     all_info = scrape_all_results(args.query, args.domain, args.max_pages, args.delay, args.output, args.urls_only)
     logger.info(f"Finished. Found a total of {len(all_info)} unique entries and saved them to {args.output}")
