@@ -81,6 +81,8 @@ This project is [MIT](https://choosealicense.com/licenses/mit/) licensed.
 
 ## Changelog / Updates
 
+### v2.0
+
 This updated script includes:
 
 1. More verbose logging throughout the script, especially in the `extract_info` function.
@@ -101,3 +103,21 @@ To use the script with these new features:
 
 These changes provide more detailed logging for debugging purposes and offer more flexibility in the output format.
 The verbose logging will help you understand exactly what the script is doing at each step, which can be particularly useful when troubleshooting or when you want to know why specific results are or aren't being included.
+
+### v3.0
+
+The main changes are:
+
+1. Modified the `setup_logger` function to accept a `log_file` parameter.
+2. Added a file handler to the logger if a log file is specified.
+3. Added a new command-line argument `-l` or `--log-file` to specify the log file.
+
+Now you can use the script with file logging like this:
+
+```
+python3 search_scraper.py "site:example.com" "example.com" -o scrape_tylerhalltech.com.csv -m 500 -d 3 -v --urls-only -l scrape_log.txt
+```
+
+This will create a log file named `scrape_log.txt` in addition to logging to the console. The log file will contain all the verbose output, which you can review later to investigate any issues that might have occurred during scraping.
+
+This setup allows you to have both console output for real-time monitoring and a detailed log file for later analysis, giving you the best of both worlds for debugging and investigating the scraping process.
