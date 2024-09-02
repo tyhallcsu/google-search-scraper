@@ -115,7 +115,7 @@ The main changes are:
 Now you can use the script with file logging like this:
 
 ```
-python3 search_scraper.py "site:example.com" "example.com" -o scrape_tylerhalltech.com.csv -m 500 -d 3 -v --urls-only -l scrape_log.txt
+python3 search_scraper.py "site:example.com" "example.com" -o scrape_example.csv -m 500 -d 3 -v --urls-only -l scrape_log.txt
 ```
 
 This will create a log file named `scrape_log.txt` in addition to logging to the console. The log file will contain all the verbose output, which you can review later to investigate any issues that might have occurred during scraping.
